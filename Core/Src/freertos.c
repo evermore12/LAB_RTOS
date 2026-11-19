@@ -52,7 +52,28 @@ osThreadId_t defaultTaskHandle;
 const osThreadAttr_t defaultTask_attributes = {
   .name = "defaultTask",
   .stack_size = 128 * 4,
+  .priority = (osPriority_t) osPriorityLow,
+};
+/* Definitions for Blink1Task */
+osThreadId_t Blink1TaskHandle;
+const osThreadAttr_t Blink1Task_attributes = {
+  .name = "Blink1Task",
+  .stack_size = 128 * 4,
   .priority = (osPriority_t) osPriorityNormal,
+};
+/* Definitions for Blink2Task */
+osThreadId_t Blink2TaskHandle;
+const osThreadAttr_t Blink2Task_attributes = {
+  .name = "Blink2Task",
+  .stack_size = 128 * 4,
+  .priority = (osPriority_t) osPriorityNormal,
+};
+/* Definitions for TriggTask */
+osThreadId_t TriggTaskHandle;
+const osThreadAttr_t TriggTask_attributes = {
+  .name = "TriggTask",
+  .stack_size = 128 * 4,
+  .priority = (osPriority_t) osPriorityHigh,
 };
 
 /* Private function prototypes -----------------------------------------------*/
@@ -61,6 +82,9 @@ const osThreadAttr_t defaultTask_attributes = {
 /* USER CODE END FunctionPrototypes */
 
 void StartDefaultTask(void *argument);
+void Blink1(void *argument);
+void Blink2(void *argument);
+void Trigg(void *argument);
 
 void MX_FREERTOS_Init(void); /* (MISRA C 2004 rule 8.1) */
 
@@ -94,6 +118,15 @@ void MX_FREERTOS_Init(void) {
   /* creation of defaultTask */
   defaultTaskHandle = osThreadNew(StartDefaultTask, NULL, &defaultTask_attributes);
 
+  /* creation of Blink1Task */
+  Blink1TaskHandle = osThreadNew(Blink1, NULL, &Blink1Task_attributes);
+
+  /* creation of Blink2Task */
+  Blink2TaskHandle = osThreadNew(Blink2, NULL, &Blink2Task_attributes);
+
+  /* creation of TriggTask */
+  TriggTaskHandle = osThreadNew(Trigg, NULL, &TriggTask_attributes);
+
   /* USER CODE BEGIN RTOS_THREADS */
   /* add threads, ... */
   /* USER CODE END RTOS_THREADS */
@@ -120,6 +153,60 @@ void StartDefaultTask(void *argument)
     osDelay(1);
   }
   /* USER CODE END StartDefaultTask */
+}
+
+/* USER CODE BEGIN Header_Blink1 */
+/**
+* @brief Function implementing the Blink1Task thread.
+* @param argument: Not used
+* @retval None
+*/
+/* USER CODE END Header_Blink1 */
+void Blink1(void *argument)
+{
+  /* USER CODE BEGIN Blink1 */
+  /* Infinite loop */
+  for(;;)
+  {
+    osDelay(1);
+  }
+  /* USER CODE END Blink1 */
+}
+
+/* USER CODE BEGIN Header_Blink2 */
+/**
+* @brief Function implementing the Blink2Task thread.
+* @param argument: Not used
+* @retval None
+*/
+/* USER CODE END Header_Blink2 */
+void Blink2(void *argument)
+{
+  /* USER CODE BEGIN Blink2 */
+  /* Infinite loop */
+  for(;;)
+  {
+    osDelay(1);
+  }
+  /* USER CODE END Blink2 */
+}
+
+/* USER CODE BEGIN Header_Trigg */
+/**
+* @brief Function implementing the TriggTask thread.
+* @param argument: Not used
+* @retval None
+*/
+/* USER CODE END Header_Trigg */
+void Trigg(void *argument)
+{
+  /* USER CODE BEGIN Trigg */
+  /* Infinite loop */
+  for(;;)
+  {
+    osDelay(1);
+  }
+  /* USER CODE END Trigg */
 }
 
 /* Private application code --------------------------------------------------*/
